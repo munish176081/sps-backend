@@ -1,0 +1,9 @@
+.fi-simple-main, .fi-topbar { background-color: #283C28 !important;}
+.fi-topbar-start img {padding: 5px;}
+.fi-simple-main { border-radius: 1rem; }
+.fi-simple-main h1, 
+.fi-simple-main .fi-simple-header-heading, 
+.fi-simple-main .text-gray-950, 
+.fi-simple-main .dark\:text-white { color: #ffffff !important; }
+.fi-simple-main .fi-fo-field-label-content { color: #ffffff !important; }
+.fi-simple-main .fi-simple-card { background-color: #283C28 !important; }

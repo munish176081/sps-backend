@@ -19,19 +19,29 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Filament\Navigation\NavigationGroup;
+use Illuminate\Support\Facades\Blade;
+use Filament\Support\Facades\FilamentAsset;
+use Filament\Support\Assets\Css;
 
 
 class AdminPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
     {
+        FilamentAsset::register([
+            Css::make('sis-stylesheet', asset('css/theme.css')),
+        ]);
+
         return $panel
             ->default()
+            ->brandName('Splendour In Stone')
+            ->brandLogo(asset('images/sis-logo.png'))
+            ->brandLogoHeight('60px')
             ->id('admin')
             ->path('admin')
             ->login()
             ->colors([
-                'primary' => Color::Amber,
+                'primary' => '#283C28',
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')
