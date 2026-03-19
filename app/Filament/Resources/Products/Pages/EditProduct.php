@@ -16,4 +16,26 @@ class EditProduct extends EditRecord
             DeleteAction::make(),
         ];
     }
+
+    public function getBreadcrumbs(): array
+    {
+        $product = $this->record;
+
+        $breadcrumbs = [
+            route('filament.admin.pages.dashboard') => 'Dashboard',
+            route('filament.admin.resources.products.index') => 'Products',
+        ];
+
+        if ($product->category?->parent) {
+            $breadcrumbs[] = $product->category->parent->name;
+        }
+
+        if ($product->category) {
+            $breadcrumbs[] = $product->category->name;
+        }
+
+        $breadcrumbs[] = $product->title;
+
+        return $breadcrumbs;
+    }
 }

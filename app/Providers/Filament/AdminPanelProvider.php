@@ -19,19 +19,15 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Filament\Navigation\NavigationGroup;
+use Illuminate\Support\Facades\Vite;
+use Filament\Support\Facades\FilamentView;
 use Illuminate\Support\Facades\Blade;
-use Filament\Support\Facades\FilamentAsset;
-use Filament\Support\Assets\Css;
 
 
 class AdminPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
     {
-        FilamentAsset::register([
-            Css::make('sis-stylesheet', asset('css/theme.css')),
-        ]);
-
         return $panel
             ->default()
             ->brandName('Splendour In Stone')
@@ -45,6 +41,22 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')
+            ->renderHook(
+            'panels::head.end',
+            fn (): string => Blade::render('
+                <style>
+                    .fi-simple-main, .fi-topbar { background-color: #283C28 !important;}
+                    .fi-topbar-start img {padding: 5px;}
+                    .fi-simple-main { border-radius: 1rem; }
+                    .fi-simple-main h1, 
+                    .fi-simple-main .fi-simple-header-heading, 
+                    .fi-simple-main .text-gray-950, 
+                    .fi-simple-main .dark\:text-white { color: #ffffff !important; }
+                    .fi-simple-main .fi-fo-field-label-content { color: #ffffff !important; }
+                    .fi-simple-main .fi-simple-card { background-color: #283C28 !important; }
+                </style>
+            '),
+        )
             ->pages([
                 Dashboard::class,
             ])

@@ -55,6 +55,7 @@ class ProductForm
                 ->disk('public')
                 ->directory('products/gallery')
                 ->reorderable()
+                ->imagePreviewHeight('100')
                 ->panelLayout('grid')
                 ->label('Gallery Images'),
 
@@ -96,7 +97,6 @@ class ProductForm
                         ->label('Meta Keywords')
                         ->helperText('Comma separated keywords'),
                 ])
-                ->collapsed(),
         ]);
     }
 }

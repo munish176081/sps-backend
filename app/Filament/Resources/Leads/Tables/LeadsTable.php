@@ -34,18 +34,20 @@ class LeadsTable
 
                 TextColumn::make('created_at')
                     ->label('Submitted')
-                    ->dateTime(),
+                    ->dateTime()
+                    ->sortable(),
             ])
             ->filters([
                 //
             ])
             ->recordActions([
-                EditAction::make(),
+                //EditAction::make(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),
                 ]),
-            ]);
+            ])
+            ->defaultSort('created_at', 'desc');
     }
 }

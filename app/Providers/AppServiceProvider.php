@@ -21,9 +21,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // force https
-        if (str_contains(request()->getHost(), 'ngrok-free.dev')){
-            URL::forceScheme('https');
+        // Check if the request is coming through an HTTPS proxy
+        if (request()->header('X-Forwarded-Proto') === 'https' || 
+            str_contains(request()->getHost(), 'ngrok-free')) {
+            \Illuminate\Support\Facades\URL::forceScheme('https');
         }
     }
 }

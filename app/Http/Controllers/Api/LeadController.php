@@ -16,6 +16,7 @@ class LeadController extends Controller
             'phone' => 'required',
             'product_id' => 'nullable|exists:products,id',
             'message' => 'nullable|string',
+            'honeypot' => 'prohibited'
         ]);
 
         $lead = Lead::create($validated);
