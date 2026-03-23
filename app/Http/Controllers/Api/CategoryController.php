@@ -33,12 +33,10 @@ class CategoryController extends Controller
                 'title' => $category->title,
                 'subtitle' => $category->subtitle,
                 'overview' => $category->overview,
-                'gallery' => collect($category->gallery)->map(fn($img) => asset('storage/' . $img)),
+                'gallery' => collect($category->gallery ?? [])->map(fn($img) => r2_url($img)),
                 'collections_title' => $category->collections_title ?? "Collections",
                 'collections_description' => $category->collections_description,
-                'banner_image' => $category->banner_image
-                    ? asset('storage/' . $category->banner_image)
-                    : null,
+                'banner_image' => r2_url($category->banner_image),
                 'specs' => $category->specs ?? [],
                 'faqs' => $category->faqs ?? [],
                 'products' => $category->products->map(function ($product) {
@@ -46,9 +44,28 @@ class CategoryController extends Controller
                         'id' => $product->id,
                         'title' => $product->title,
                         'slug' => $product->slug,
-                        'main_image' => asset('storage/' . $product->main_image),
+                        'main_image' => r2_url($product->main_image),
                     ];
                 }),
+                'brochures' => [
+                    'project_book' => [
+                        'image' => isset($category->brochures['project_book']['image'])
+                            ? r2_url($category->brochures['project_book']['image'])
+                            : null,
+                        'file' => isset($category->brochures['project_book']['file'])
+                            ? r2_url($category->brochures['project_book']['file'])
+                            : null,
+                    ],
+
+                    'range' => [
+                        'image' => isset($category->brochures['range']['image'])
+                            ? r2_url($category->brochures['range']['image'])
+                            : null,
+                        'file' => isset($category->brochures['range']['file'])
+                            ? r2_url($category->brochures['range']['file'])
+                            : null,
+                    ],
+                ],
             ]
         ]);
     }

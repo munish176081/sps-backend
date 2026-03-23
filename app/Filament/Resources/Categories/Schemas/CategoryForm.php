@@ -53,8 +53,9 @@ class CategoryForm
             FileUpload::make('banner_image')
                 ->label('Banner Image')
                 ->image()
-                ->disk('public')
-                ->directory('categories'),
+                ->disk('r2')
+                ->directory('categories')
+                ->visibility('public'),
 
             /*
             |--------------------------------------------------------------------------
@@ -64,12 +65,15 @@ class CategoryForm
             FileUpload::make('gallery')
                 ->label('Gallery')
                 ->image()
-                ->disk('public')
+                ->disk('r2')
                 ->multiple()
                 ->reorderable()
                 ->imagePreviewHeight('100')
                 ->panelLayout('grid')
-                ->directory('categories/gallery'),
+                ->directory('categories/gallery')
+                ->visibility('public')
+                ->preserveFilenames(false)
+                ->maxFiles(20),
 
             TextInput::make('title')
                 ->label('Page Title'),
@@ -114,6 +118,44 @@ class CategoryForm
 
             Textarea::make('collections_description')
                 ->label('Collections Description'),
+
+            /*
+            |--------------------------------------------------------------------------
+            | Brochures Section
+            |--------------------------------------------------------------------------
+            */
+            Section::make('Brochures')
+                ->columnSpanFull()
+                ->columns(2)
+                ->schema([
+
+                    Section::make('Project Book')
+                        ->schema([
+                            FileUpload::make('brochures.project_book.image')
+                                ->image()
+                                ->disk('r2')
+                                ->directory('brochures/project-book'),
+
+                            FileUpload::make('brochures.project_book.file')
+                                ->acceptedFileTypes(['application/pdf'])
+                                ->disk('r2')
+                                ->directory('brochures/project-book'),
+                        ]),
+
+                    Section::make('Range')
+                        ->schema([
+                            FileUpload::make('brochures.range.image')
+                                ->image()
+                                ->disk('r2')
+                                ->directory('brochures/range'),
+
+                            FileUpload::make('brochures.range.file')
+                                ->acceptedFileTypes(['application/pdf'])
+                                ->disk('r2')
+                                ->directory('brochures/range'),
+                        ]),
+                ]),
+
 
             /*
             |--------------------------------------------------------------------------

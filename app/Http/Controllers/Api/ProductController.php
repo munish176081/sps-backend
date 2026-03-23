@@ -28,7 +28,7 @@ class ProductController extends Controller
                 'id' => $product->id,
                 'title' => $product->title,
                 'slug' => $product->slug,
-                'main_image' => asset('storage/' . $product->main_image),
+                'main_image' => r2_url($product->main_image),
             ];
         });
 
@@ -59,8 +59,8 @@ class ProductController extends Controller
                     ->select('id', 'title', 'slug')
                     ->get(),
                 'description' => $product->description,
-                'main_image' => asset('storage/' . $product->main_image),
-                'gallery' => collect($product->gallery)->map(fn($img) => asset('storage/' . $img)),
+                'main_image' => r2_url($product->main_image),
+                'gallery' => collect($product->gallery ?? [])->map(fn($img) => r2_url($img)),
                 'sizes' => $product->sizes,
                 'faqs' => $product->faqs,
                 'seo' => [
@@ -94,7 +94,7 @@ class ProductController extends Controller
                 $subcategory->products->map(function ($product) {
 
                     if ($product->main_image) {
-                        $product->main_image = asset('storage/' . $product->main_image);
+                        $product->main_image = r2_url($product->main_image);
                     }
 
                     return $product;

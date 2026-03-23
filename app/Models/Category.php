@@ -17,18 +17,20 @@ class Category extends Model
         'subtitle',
         'overview',
         'gallery',
+        'brochures',
         'specs',
         'collections_title',
         'collections_description',
         'faqs',
         'meta_title',
-        'meta_description',
+        'meta_description'
     ];
 
     protected $casts = [
         'specs' => 'array',
         'faqs' => 'array',
         'gallery' => 'array',
+        'brochures' => 'array',
     ];
 
     public function parent()

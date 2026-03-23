@@ -45,19 +45,22 @@ class ProductForm
                 ->columnSpanFull(),
 
             FileUpload::make('main_image')
-                ->image()
-                ->disk('public')
-                ->directory('products'),
+                ->disk('r2')
+                ->directory('products')
+                ->visibility('public'),
 
             FileUpload::make('gallery')
+                ->label('Gallery Images')
                 ->multiple()
                 ->image()
-                ->disk('public')
+                ->disk('r2')
                 ->directory('products/gallery')
+                ->visibility('public')
                 ->reorderable()
                 ->imagePreviewHeight('100')
                 ->panelLayout('grid')
-                ->label('Gallery Images'),
+                ->preserveFilenames(false)
+                ->maxFiles(20),
 
             Repeater::make('sizes')
                 ->relationship()

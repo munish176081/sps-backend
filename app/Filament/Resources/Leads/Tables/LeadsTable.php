@@ -30,7 +30,11 @@ class LeadsTable
                     ->badge()
                     ->color('success'),
 
-                TextColumn::make('source'),
+                TextColumn::make('form_type')
+                    ->label('Form')
+                    ->badge()
+                    ->sortable(),
+
 
                 TextColumn::make('created_at')
                     ->label('Submitted')
@@ -41,7 +45,15 @@ class LeadsTable
                 //
             ])
             ->recordActions([
-                //EditAction::make(),
+                EditAction::make('view')
+                    ->label('View')
+                    ->icon('heroicon-o-eye')
+                    ->modalHeading('Lead Details')
+                    ->modalSubmitAction(false)
+                    ->modalCancelActionLabel('Close')
+                    ->modalContent(fn($record) => view('Filament.leads.details', [
+                        'lead' => $record,
+                    ])),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

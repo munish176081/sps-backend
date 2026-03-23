@@ -12,7 +12,13 @@ class Lead extends Model
         'product_id',
         'phone',
         'message',
-        'source'
+        'form_type',
+        'source_page',
+        'data',
+    ];
+
+    protected $casts = [
+        'data' => 'array',
     ];
 
     public function product()
