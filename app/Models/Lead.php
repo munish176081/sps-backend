@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Product;
 
 class Lead extends Model
 {
@@ -24,5 +25,15 @@ class Lead extends Model
     public function product()
     {
         return $this->belongsTo(Product::class);
+    }
+    public function getStoneNamesAttribute()
+    {
+        if (!isset($this->data['stones'])) {
+            return null;
+        }
+
+        return Product::whereIn('id', $this->data['stones'])
+            ->pluck('title')
+            ->implode(', ');
     }
 }

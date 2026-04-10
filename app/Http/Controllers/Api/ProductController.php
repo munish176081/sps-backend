@@ -105,4 +105,35 @@ class ProductController extends Controller
 
         return response()->json($subcategories);
     }
+
+    public function stoneData()
+    {
+        $categories = Category::query()
+            ->select('id', 'name', 'slug')
+            ->where('status', true)
+            ->orderBy('created_at', 'asc')
+            ->get();
+
+        $products = Product::query()
+            ->select('id', 'title', 'slug', 'main_image', 'category_id')
+            ->where('status', true)
+            ->get()
+            ->map(function ($product) {
+                return [
+                    'id' => $product->id,
+                    'title' => $product->title,
+                    'slug' => $product->slug,
+                    'category_id' => $product->category->id,
+                    'main_image' => r2_url($product->main_image),
+                ];
+            });
+
+        return response()->json([
+            'success' => true,
+            'data' => [
+                'categories' => $categories,
+                'products' => $products
+            ]
+        ]);
+    }
 }
